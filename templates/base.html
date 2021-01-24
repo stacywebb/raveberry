@@ -23,7 +23,6 @@
 		<script src="{% static "libs/jquerykeyframes/dist/jquery.keyframes.js" %}"></script>
 		<script src="{% static "libs/js-cookie/src/js.cookie.js" %}"></script>
 		<script src="{% static "libs/markdown-it/dist/markdown-it.min.js" %}"></script>
-		<script src="{% static "libs/reconnecting-websocket/dist/reconnecting-websocket-iife.min.js" %}"></script>
 		{% endcompress %}
 		{% compress js inline %}
 		<script>
@@ -62,7 +61,7 @@
 		<script src="{% static "js/base.js" %}"></script>
 		{% block scripts %}
 		{% endblock %}
-		<script src="{% static "js/events.js" %}"></script>
+		<script type="module" src="{% static "js/events.js" %}"></script>
 		{% endcompress %}
 
 		<title>Raveberry</title>

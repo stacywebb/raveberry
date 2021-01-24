@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "outDir": "./static/js",
+	"baseUrl": "./static",
+    "allowJs": true,
+    "target": "es6",
+	"moduleResolution": "node",
+	"allowSyntheticDefaultImports": true,
+	"lib": [
+		"dom",
+		"es7"
+	]
+  },
+  "include": ["./static/ts/**/*"]
+}

@@ -1,4 +1,4 @@
-updateState = function (newState) {
+specificState = function (newState) {
 	updateBaseState(newState);
 	if (!('ring_connected' in newState)) {
 		// this state is not meant for a lights update

@@ -1,9 +1,9 @@
 function keyOfElement(element) {
 	// takes a jquery element and returns the index of it in the song queue
-	index = element.closest('.queue_entry').parent().index();
+	let index = element.closest('.queue_entry').parent().index();
 	// if the element is currently being reordered, look into its index span for the index 
 	if (index == -1) {
-		el = element.find('.queue_index');
+		let el = element.find('.queue_index');
 		if (index.length == 0)
 			el = element.closest('.queue_entry').find('.queue_index');
 		index = el.text() - 1;
@@ -128,15 +128,16 @@ $(document).ready(function() {
 	});
 	$('#music_input').focus(function() {
 		showSearchIcon();
-		let content_length = $(this).val().length;
-		$(this)[0].setSelectionRange(content_length, content_length);
+		let el = $(this) as JQuery<HTMLInputElement>;
+		let content_length = (el.val() as string).length;
+		el[0].setSelectionRange(content_length, content_length);
 	});
 	$('#clearbutton').on('click tap', function() {
 		$(this).prev('input').val('').trigger('change').focus();
 	});
 	$("#music_input").on('change input copy paste cut', function() {
 		let icon = $(this).next('i');
-		if (!this.value) {
+		if (!(this as HTMLInputElement).value) {
 			icon.css('opacity', '0');
 		} else {
 			icon.css('opacity', '1');

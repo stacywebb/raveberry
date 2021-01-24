@@ -30,7 +30,7 @@ $(document).ready(function() {
 		return false;
 	}
 	function vote_down(button, key) {
-		votes = button.closest('.queue_entry').find('.queue_index');
+		let votes = button.closest('.queue_entry').find('.queue_index');
 		if (votes.length == 0) {
 			votes = button.siblings('#current_song_votes');
 		}
@@ -40,7 +40,7 @@ $(document).ready(function() {
 		});
 	}
 	function vote_up(button, key) {
-		votes = button.closest('.queue_entry').find('.queue_index');
+		let votes = button.closest('.queue_entry').find('.queue_index');
 		if (votes.length == 0) {
 			votes = button.siblings('#current_song_votes');
 		}

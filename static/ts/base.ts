@@ -1,7 +1,20 @@
+declare let CSRF_TOKEN: string;
+declare let urls: { string: string; }
+declare let VOTING_SYSTEM: boolean;
+declare let ADMIN: boolean;
+declare let CONTROLS_ENABLED: boolean;
+interface JQueryStatic {
+    keyframe: any;
+}
+interface JQuery {
+	toast(...any): any;
+	modal(...any): any;
+}
+
 let state = null;
 let toastTimeout = 2000;
 let currentToastId = 0;
-function infoToast(firstLine, secondLine) {
+function infoToast(firstLine, secondLine?) {
 	$('#info-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#info-toast').find('.toast-content').append($('<br/>'));
@@ -18,7 +31,7 @@ function infoToast(firstLine, secondLine) {
 			$('#info-toast').fadeOut();
 	}, toastTimeout);
 }
-function successToast(firstLine, secondLine) {
+function successToast(firstLine, secondLine?) {
 	$('#success-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#success-toast').find('.toast-content').append($('<br/>'));
@@ -35,7 +48,7 @@ function successToast(firstLine, secondLine) {
 			$('#success-toast').fadeOut();
 	}, toastTimeout);
 }
-function warningToast(firstLine, secondLine, showBar) {
+function warningToast(firstLine, secondLine?, showBar?) {
 	if (!showBar) {
 		$('#vote_timeout_bar').hide();
 	}
@@ -55,10 +68,10 @@ function warningToast(firstLine, secondLine, showBar) {
 			$('#warning-toast').fadeOut();
 	}, toastTimeout);
 }
-function warningToastWithBar(firstLine, secondLine) {
+function warningToastWithBar(firstLine, secondLine?) {
 	warningToast(firstLine, secondLine, true);
 }
-function errorToast(firstLine, secondLine) {
+function errorToast(firstLine, secondLine?) {
 	$('#error-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#error-toast').find('.toast-content').append($('<br/>'));
@@ -281,6 +294,7 @@ $(document).ready(function() {
 			options.data += options.data?"&":"";
 			// add _token entry
 			options.data += "csrfmiddlewaretoken=" + encodeURIComponent(CSRF_TOKEN);
+			console.log(CSRF_TOKEN);
 		}
 	});
 

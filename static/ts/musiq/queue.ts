@@ -9,7 +9,7 @@ $(document).ready(function() {
 	$("#song_queue").sortable({ 
 		handle: '.queue_handle',
 		stop: function(e, ui) {
-			key = keyOfElement(ui.item);
+			let key = keyOfElement(ui.item);
 			let prev = ui.item.prev();
 			let prevKey = null;
 			if (prev.length)
@@ -20,8 +20,8 @@ $(document).ready(function() {
 				nextKey = keyOfElement(next);
 
 			// change our state so the animation does not trigger
-			newIndex = ui.item.index();
-			oldIndex = parseInt(ui.item.find('.queue_index').text()) - 1;
+			let newIndex = ui.item.index();
+			let oldIndex = parseInt(ui.item.find('.queue_index').text()) - 1;
 			let queueEntry = state.song_queue.splice(oldIndex, 1);
 			state.song_queue.splice(newIndex, 0, queueEntry[0]);
 

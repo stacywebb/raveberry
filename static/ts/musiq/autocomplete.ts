@@ -1,3 +1,6 @@
+declare let ADDITIONAL_KEYWORDS: string;
+declare let FORBIDDEN_KEYWORDS: string;
+
 $(document).ready(function() {
 	$(function() {
 		$(".autocomplete").autocomplete({
@@ -19,16 +22,13 @@ $(document).ready(function() {
 			appendTo: '#music_input_card',
 			open: function() {
 				// align the autocomplete box with the card instead of the input field
-				let card_position = $("#music_input_card").position();
-				let input_position = $("#music_input").position();
-
-				$("#music_input_card > ul").css({left: '0px',
-					top: (input_position.bottom - card_position.bottom) + "px" });
+				$("#music_input_card > ul").css({left: '0px'});
 
 			},
 			select: function(event, ui) {
 				let origEvent = event;
 				while (origEvent.originalEvent !== undefined){
+					// @ts-ignore https://stackoverflow.com/a/7317068
 					origEvent = origEvent.originalEvent;
 				}
 
