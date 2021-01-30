@@ -1,20 +1,6 @@
-declare let CSRF_TOKEN: string;
-declare let urls: { string: string; }
-declare let VOTING_SYSTEM: boolean;
-declare let ADMIN: boolean;
-declare let CONTROLS_ENABLED: boolean;
-interface JQueryStatic {
-    keyframe: any;
-}
-interface JQuery {
-	toast(...any): any;
-	modal(...any): any;
-}
-
-let state = null;
 let toastTimeout = 2000;
 let currentToastId = 0;
-function infoToast(firstLine, secondLine?) {
+export function infoToast(firstLine, secondLine?) {
 	$('#info-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#info-toast').find('.toast-content').append($('<br/>'));
@@ -31,7 +17,7 @@ function infoToast(firstLine, secondLine?) {
 			$('#info-toast').fadeOut();
 	}, toastTimeout);
 }
-function successToast(firstLine, secondLine?) {
+export function successToast(firstLine, secondLine?) {
 	$('#success-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#success-toast').find('.toast-content').append($('<br/>'));
@@ -48,7 +34,7 @@ function successToast(firstLine, secondLine?) {
 			$('#success-toast').fadeOut();
 	}, toastTimeout);
 }
-function warningToast(firstLine, secondLine?, showBar?) {
+export function warningToast(firstLine, secondLine?, showBar?) {
 	if (!showBar) {
 		$('#vote_timeout_bar').hide();
 	}
@@ -68,10 +54,10 @@ function warningToast(firstLine, secondLine?, showBar?) {
 			$('#warning-toast').fadeOut();
 	}, toastTimeout);
 }
-function warningToastWithBar(firstLine, secondLine?) {
+export function warningToastWithBar(firstLine, secondLine?) {
 	warningToast(firstLine, secondLine, true);
 }
-function errorToast(firstLine, secondLine?) {
+export function errorToast(firstLine, secondLine?) {
 	$('#error-toast').find('.toast-content').text(firstLine);
 	if (secondLine != null) {
 		$('#error-toast').find('.toast-content').append($('<br/>'));
@@ -88,7 +74,7 @@ function errorToast(firstLine, secondLine?) {
 			$('#error-toast').fadeOut();
 	}, toastTimeout);
 }
-function updateBaseState(newState) {
+export function updateBaseState(newState) {
 	$('#users').text(newState.users);
 	$('#visitors').text(newState.visitors);
 	if (newState.lights_enabled) {
@@ -119,8 +105,8 @@ function updateBaseState(newState) {
 		$('#navbar_icon').css('visibility', 'visible');
 	}
 
-	if (Cookies.get('platform') === undefined) {
-		Cookies.set('platform', newState.default_platform, { expires: 1 });
+	if (window.Cookies.get('platform') === undefined) {
+		window.Cookies.set('platform', newState.default_platform, { expires: 1 });
 	}
 
 	updatePlatformClasses();
@@ -128,8 +114,11 @@ function updateBaseState(newState) {
 
 // this default behaviors can be overwritten by individual pages
 let specificState;
+export function registerSpecificState(f) {
+    specificState = f;
+}
 
-function updateState(newState) {
+export function updateState(newState) {
 	updateBaseState(newState);
 
 	if (specificState !== undefined) {
@@ -137,16 +126,16 @@ function updateState(newState) {
 	}
 }
 
-function getState() {
+export function getState() {
 	$.get(urls['state'], function(state) {
 		updateState(state);
 	});
 }
-function reconnect() {
+export function reconnect() {
 	getState();
 }
 
-function decideScrolling(span, seconds_per_pixel, static_seconds) {
+export function decideScrolling(span, seconds_per_pixel, static_seconds) {
 	let space_available = span.parent().width();
 	let space_needed = span.width();
 	if (space_available < space_needed) {
@@ -192,16 +181,16 @@ function updatePlatformClasses() {
 	$('#youtube').addClass('icon_disabled');
 	$('#spotify').addClass('icon_disabled');
 	$('#soundcloud').addClass('icon_disabled');
-	if (Cookies.get('platform') == 'local') {
+	if (window.Cookies.get('platform') == 'local') {
 		$('#local').removeClass('icon_disabled');
 		$('#local').addClass('icon_enabled');
-	} else if (Cookies.get('platform') == 'youtube') {
+	} else if (window.Cookies.get('platform') == 'youtube') {
 		$('#youtube').removeClass('icon_disabled');
 		$('#youtube').addClass('icon_enabled');
-	} else if (Cookies.get('platform') == 'spotify') {
+	} else if (window.Cookies.get('platform') == 'spotify') {
 		$('#spotify').removeClass('icon_disabled');
 		$('#spotify').addClass('icon_enabled');
-	} else if (Cookies.get('platform') == 'soundcloud') {
+	} else if (window.Cookies.get('platform') == 'soundcloud') {
 		$('#soundcloud').removeClass('icon_disabled');
 		$('#soundcloud').addClass('icon_enabled');
 	}
@@ -216,7 +205,7 @@ function toggle_theme() {
 		$('#light_theme').addClass('icon_disabled');
 		$('#dark_theme').removeClass('icon_disabled');
 		$('#dark_theme').addClass('icon_enabled');
-		if (state != null && !state.partymode) {
+		if ($('#navbar_icon').attr('src') != urls['party_icon']) {
 			$('#navbar_icon').attr('src', urls['normal_icon']);
 		}
 		$('#shareberry_icon').attr('src', urls['shareberry_dark_icon']);
@@ -225,7 +214,7 @@ function toggle_theme() {
 		$('#light_theme').addClass('icon_enabled');
 		$('#dark_theme').removeClass('icon_enabled');
 		$('#dark_theme').addClass('icon_disabled');
-		if (state != null && !state.partymode) {
+		if ($('#navbar_icon').attr('src') != urls['party_icon']) {
 			$('#navbar_icon').attr('src', urls['normal_light_icon']);
 		}
 		$('#shareberry_icon').attr('src', urls['shareberry_light_icon']);
@@ -384,14 +373,14 @@ $(document).ready(function() {
 	if ($('#active-stylesheet').attr('href').endsWith('dark.css')) {
 		$('#light_theme').addClass('icon_disabled');
 		$('#dark_theme').addClass('icon_enabled');
-		if (Cookies.get('theme') == 'light') {
+		if (window.Cookies.get('theme') == 'light') {
 			toggle_theme();
 		}
 	} else {
 		$('#light_theme').addClass('icon_enabled');
 		$('#dark_theme').addClass('icon_disabled');
 		$('#navbar_icon').attr('src', urls['normal_light_icon']);
-		if (Cookies.get('theme') == 'dark') {
+		if (window.Cookies.get('theme') == 'dark') {
 			toggle_theme();
 		}
 	}
@@ -400,37 +389,37 @@ $(document).ready(function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
 		toggle_theme();
-		Cookies.set('theme', 'light', { expires: 7 });
+		window.Cookies.set('theme', 'light', { expires: 7 });
 	});
 	$('#dark_theme').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
 		toggle_theme();
-		Cookies.set('theme', 'dark', { expires: 7 });
+		window.Cookies.set('theme', 'dark', { expires: 7 });
 	});
 
 	$('#local').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		Cookies.set('platform', 'local', { expires: 1 });
+		window.Cookies.set('platform', 'local', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#youtube').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		Cookies.set('platform', 'youtube', { expires: 1 });
+		window.Cookies.set('platform', 'youtube', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#spotify').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		Cookies.set('platform', 'spotify', { expires: 1 });
+		window.Cookies.set('platform', 'spotify', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#soundcloud').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		Cookies.set('platform', 'soundcloud', { expires: 1 });
+		window.Cookies.set('platform', 'soundcloud', { expires: 1 });
 		updatePlatformClasses();
 	});
 
@@ -445,15 +434,15 @@ $(document).ready(function() {
 	})
 	$('#remind_updates').on('click tap', function() {
 		let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		Cookies.set('ignore_updates', '', {expires: tomorrow});
+		window.Cookies.set('ignore_updates', '', {expires: tomorrow});
 		$('#update-banner').slideUp('fast');
 	})
 	$('#ignore_updates').on('click tap', function() {
-		Cookies.set('ignore_updates', '', {expires: 365});
+		window.Cookies.set('ignore_updates', '', {expires: 365});
 		$('#update-banner').slideUp('fast');
 	})
 	if (ADMIN) {
-		if (Cookies.get("ignore_updates") === undefined) {
+		if (window.Cookies.get("ignore_updates") === undefined) {
 			$.get(urls['upgrade_available']).done(function(response) {
 				if (response) {
 					$('#update-banner').slideDown('fast');

@@ -1,4 +1,7 @@
-function keyOfElement(element) {
+import {state} from "./update.js";
+import {infoToast, successToast, warningToast, errorToast} from "../base.js";
+
+export function keyOfElement(element) {
 	// takes a jquery element and returns the index of it in the song queue
 	let index = element.closest('.queue_entry').parent().index();
 	// if the element is currently being reordered, look into its index span for the index 
@@ -10,11 +13,11 @@ function keyOfElement(element) {
 	}
 	return state.song_queue[index].id;
 }
-function playlistEnabled() {
+export function playlistEnabled() {
 	return $('#playlist_mode').hasClass('icon_enabled');
 }
 
-function disablePlaylistMode() {
+export function disablePlaylistMode() {
 	$('#playlist_mode').removeClass('icon_enabled');
 	$('#playlist_mode').addClass('icon_disabled');
 	$('#request_radio').removeClass('icon_enabled');
@@ -22,19 +25,19 @@ function disablePlaylistMode() {
 	$('#remove_all').removeClass('icon_enabled');
 	$('#remove_all').addClass('icon_disabled');
 }
-function showPlayButton() {
+export function showPlayButton() {
 	$("#play").before($("#pause"));
 	setTimeout(function(){
 		$('#play_button_container').removeClass('morphed');
 	}, 50);
 }
-function showPauseButton() {
+export function showPauseButton() {
 	$("#pause").before($("#play"));
 	setTimeout(function(){
 		$('#play_button_container').addClass('morphed');
 	}, 50);
 }
-function request_archived_music(key, query, platform=Cookies.get('platform')) {
+export function request_archived_music(key, query, platform=window.Cookies.get('platform')) {
 	$.post(urls['request_music'],
 		{
 			key: key,
@@ -43,7 +46,7 @@ function request_archived_music(key, query, platform=Cookies.get('platform')) {
 			platform: platform,
 		}).done(function(response) {
 			successToast(response.message, '"' + query + '"');
-			Cookies.set('vote_' + response.key, '+', { expires: 7 });
+			window.Cookies.set('vote_' + response.key, '+', { expires: 7 });
 		}).fail(function(response) {
 			errorToast(response.responseText, '"' + query + '"');
 		});
@@ -52,7 +55,7 @@ function request_archived_music(key, query, platform=Cookies.get('platform')) {
 	disablePlaylistMode();
 }
 
-function request_new_music(query, platform=Cookies.get('platform')) {
+export function request_new_music(query, platform=window.Cookies.get('platform')) {
 	$.post(urls['request_music'],
 		{
 			query: query,
@@ -60,7 +63,7 @@ function request_new_music(query, platform=Cookies.get('platform')) {
 			platform: platform,
 		}).done(function(response) {
 			successToast(response.message, '"' + query + '"');
-			Cookies.set('vote_' + response.key, '+', { expires: 7 });
+			window.Cookies.set('vote_' + response.key, '+', { expires: 7 });
 		}).fail(function(response) {
 			errorToast(response.responseText, '"' + query + '"');
 		});

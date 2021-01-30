@@ -30,13 +30,13 @@
     urls['vote_up'] = '{% url 'vote_up_song' %}';
     urls['vote_down'] = '{% url 'vote_down_song' %}';
 </script>
-<script src="{% static "js/musiq/title_scrolling.js" %}"></script>
-<script src="{% static "js/musiq/autocomplete.js" %}"></script>
-<script src="{% static "js/musiq/queue.js" %}"></script>
-<script src="{% static "js/musiq/buttons.js" %}"></script>
-<script src="{% static "js/musiq/buttons_voting.js" %}"></script>
-<script src="{% static "js/musiq/buttons_normal.js" %}"></script>
-<script src="{% static "js/musiq/update.js" %}"></script>
+<script type="module" src="{% static "js/musiq/title_scrolling.js" %}"></script>
+<script type="module" src="{% static "js/musiq/autocomplete.js" %}"></script>
+<script type="module" src="{% static "js/musiq/queue.js" %}"></script>
+<script type="module" src="{% static "js/musiq/buttons.js" %}"></script>
+<script type="module" src="{% static "js/musiq/buttons_voting.js" %}"></script>
+<script type="module" src="{% static "js/musiq/buttons_normal.js" %}"></script>
+<script type="module" src="{% static "js/musiq/update.js" %}"></script>
 {% endblock %}
 
 {% block content %}

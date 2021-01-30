@@ -1,3 +1,5 @@
+import {decideScrolling} from "../base.js";
+
 $(document).ready(function() {
 	// rotate the currently playing song if its title is too long
 	function decideTitleScrolling() {

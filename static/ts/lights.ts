@@ -1,4 +1,6 @@
-specificState = function (newState) {
+import {registerSpecificState, updateBaseState, successToast, errorToast} from "./base.js";
+
+registerSpecificState(function (newState) {
 	updateBaseState(newState);
 	if (!('ring_connected' in newState)) {
 		// this state is not meant for a lights update
@@ -49,7 +51,7 @@ specificState = function (newState) {
 	$('#screen_program').val(newState.screen_program);
 	$('#program_speed').val(newState.program_speed);
 	$('#fixed_color').val(newState.fixed_color);
-}
+});
 
 $(document).ready(function() {
 	$('#ring_program').change(function() {

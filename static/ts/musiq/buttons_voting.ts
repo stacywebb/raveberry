@@ -1,3 +1,7 @@
+import {keyOfElement} from "./buttons.js";
+import {state} from "./update.js";
+import {warningToastWithBar} from "../base.js";
+
 $(document).ready(function() {
 	// Use a token bucket implementation to allow 10 Votes per minute.
     let maxTokens = 10;
@@ -63,7 +67,7 @@ $(document).ready(function() {
 		let other = $(this).siblings('.vote_down');
 		if ($(this).hasClass('pressed')) {
 			$(this).removeClass('pressed');
-			Cookies.set('vote_' + key, '0', { expires: 7 });
+			window.Cookies.set('vote_' + key, '0', { expires: 7 });
 			vote_down($(this), key);
 		} else {
 			$(this).addClass('pressed');
@@ -71,7 +75,7 @@ $(document).ready(function() {
 				other.removeClass('pressed');
 				vote_up($(this), key);
 			}
-			Cookies.set('vote_' + key, '+', { expires: 7 });
+			window.Cookies.set('vote_' + key, '+', { expires: 7 });
 			vote_up($(this), key);
 		}
 	});
@@ -89,7 +93,7 @@ $(document).ready(function() {
 		let other = $(this).siblings('.vote_up');
 		if ($(this).hasClass('pressed')) {
 			$(this).removeClass('pressed');
-			Cookies.set('vote_' + key, '0', { expires: 7 });
+			window.Cookies.set('vote_' + key, '0', { expires: 7 });
 			vote_up($(this), key);
 		} else {
 			$(this).addClass('pressed');
@@ -97,7 +101,7 @@ $(document).ready(function() {
 				other.removeClass('pressed');
 				vote_down($(this), key);
 			}
-			Cookies.set('vote_' + key, '-', { expires: 7 });
+			window.Cookies.set('vote_' + key, '-', { expires: 7 });
 			vote_down($(this), key);
 		}
 	});

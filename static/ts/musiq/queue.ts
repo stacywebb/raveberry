@@ -1,3 +1,6 @@
+import {state} from "./update.js";
+import {keyOfElement} from "./buttons.js";
+
 $(document).ready(function() {
 	// enable drag and drop for the song queue
 	$("#current_song").disableSelection();

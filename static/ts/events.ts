@@ -1,4 +1,5 @@
-import ReconnectingWebSocket from "../libs/reconnecting-websocket/dist/reconnecting-websocket.js";
+import ReconnectingWebSocket from "/static/libs/reconnecting-websocket/dist/reconnecting-websocket.js";
+import {updateState, reconnect} from "./base.js";
 
 let socketUrl = window.location.host + '/state/';
 if (window.location.protocol == 'https:') {

@@ -73,7 +73,7 @@
     urls['get_changelog'] = '{% url 'get_changelog' %}';
     urls['upgrade_raveberry'] = '{% url 'upgrade_raveberry' %}';
 </script>
-<script src="{% static "js/settings.js" %}"></script>
+<script type="module" src="{% static "js/settings.js" %}"></script>
 {% endblock %}
 
 {% block content %}

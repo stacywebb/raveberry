@@ -58,7 +58,7 @@
 		</script>
 		{% endcompress %}
 		{% compress js file %}
-		<script src="{% static "js/base.js" %}"></script>
+		<script type="module" src="{% static "js/base.js" %}"></script>
 		{% block scripts %}
 		{% endblock %}
 		<script type="module" src="{% static "js/events.js" %}"></script>

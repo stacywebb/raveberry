@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "outDir": "./static/js",
-	"baseUrl": "./static",
+	"baseUrl": "./",
     "allowJs": true,
     "target": "es6",
 	"moduleResolution": "node",
@@ -9,7 +9,10 @@
 	"lib": [
 		"dom",
 		"es7"
-	]
+	],
+	"paths": {
+		"/static/libs/*": ["node_modules/*"]
+	}
   },
   "include": ["./static/ts/**/*"]
 }

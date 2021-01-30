@@ -1,6 +1,10 @@
+import {registerSpecificState, updateBaseState} from "../base.js";
+import {showPlayButton, showPauseButton} from "./buttons.js";
+
+export let state = null;
 let animationInProgress = false;
 
-specificState = function (newState) {
+registerSpecificState(function (newState) {
 	updateBaseState(newState);
 
 	if (!('current_song' in newState)) {
@@ -41,7 +45,7 @@ specificState = function (newState) {
 			$('#current_song_title').trigger('change');
 		}
 
-		let previous_vote = Cookies.get('vote_' + currentSong.queue_key);
+		let previous_vote = window.Cookies.get('vote_' + currentSong.queue_key);
 		if (previous_vote == '+') {
 			$('#song_votes .vote_up').addClass('pressed');
 			$('#song_votes .vote_down').removeClass('pressed');
@@ -144,7 +148,7 @@ specificState = function (newState) {
 	// don't start a new animation when an old one is still in progress
 	// the running animation will end in the (then) current state
 	applyQueueChange(oldState, state);
-}
+});
 
 function insertDisplayName(element, song) {
 	if (song.artist == null || song.artist == '') {
@@ -199,7 +203,7 @@ function createQueueItem(song) {
 		.addClass('queue_info_controls')
 		.appendTo(info);
 	if (VOTING_SYSTEM) {
-		let previous_vote = Cookies.get('vote_' + song.id);
+		let previous_vote = window.Cookies.get('vote_' + song.id);
 		let up = $('<i/>')
 			.addClass('fas')
 			.addClass('fa-chevron-circle-up')

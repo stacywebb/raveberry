@@ -1,5 +1,4 @@
-declare let ADDITIONAL_KEYWORDS: string;
-declare let FORBIDDEN_KEYWORDS: string;
+import {request_new_music, request_archived_music, playlistEnabled} from "./buttons.js";
 
 $(document).ready(function() {
 	$(function() {
@@ -69,7 +68,7 @@ $(document).ready(function() {
 						.append('<i class="fas fa-search suggestion_type"></i>')
 						.append(term)
 						.append(additional_keywords);
-					if (Cookies.get('platform') == 'spotify' || Cookies.get('platform') == 'soundcloud') {
+					if (window.Cookies.get('platform') == 'spotify' || window.Cookies.get('platform') == 'soundcloud') {
 						suggestion_div.append(forbidden_keywords);
 					}
 					return $('<li class="ui-menu-item-with-icon"></li>')
