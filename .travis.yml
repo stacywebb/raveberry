@@ -10,13 +10,19 @@ services:
   - docker
 
 install:
+  yarn install --production
+  # for some reason tsc does not find all type declaration files in another folder,
+  # even with path remapping. Thus we use it from the default folder.
+  - yarn install --modules-folder node_modules
+  - node_modules/typescript/bin/tsc
   - docker build -f docker/tests.Dockerfile -t raveberry-test .
 
 script:
   - docker-compose -f tests/docker-compose.yml up --exit-code-from daphne
 
 before_deploy:
-  - yarn install
+  # after testing, node_modules is not needed anymore
+  - rm -rf node_modules
   - scripts/clean_libs.sh
   - pip install -r requirements/dev.txt
   - DJANGO_MOCK=1 python manage.py compilescss

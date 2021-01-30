@@ -9,7 +9,7 @@ KEEP=$(cat <<-EOF
 	jquery-ui-touch-punch/jquery.ui.touch-punch.min.js$
 	jquerykeyframes/dist/jquery.keyframes.js$
 	js-cookie/src/js.cookie.js$
-	reconnecting-websocket/dist/reconnecting-websocket-iife.min.js$
+	reconnecting-websocket/dist/reconnecting-websocket.mjs$
 	bootstrap/scss/.*
 	markdown-it/dist/markdown-it.min.js$
 	@fortawesome/fontawesome-free/webfonts/.*.woff2
@@ -21,3 +21,6 @@ KEEP=$(echo "$KEEP" | sed -z 's/\n/\\|/g' | sed 's/\\|$//')
 
 find . -type f | grep -v "$KEEP" | xargs rm
 find . -type d -empty -delete
+
+# rename the .mjs file to .js so typescript is able to use it and the module can be loaded without import path substitution
+mv reconnecting-websocket/dist/reconnecting-websocket.mjs reconnecting-websocket/dist/reconnecting-websocket.js
