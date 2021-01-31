@@ -11,7 +11,8 @@
 		"es7"
 	],
 	"paths": {
-		"/static/libs/*": ["node_modules/*"]
+		"/static/libs/*": ["node_modules/*"],
+		"@src/*": ["static/ts/*"]
 	}
   },
   "include": ["./static/ts/**/*"]

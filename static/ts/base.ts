@@ -1,3 +1,5 @@
+import * as $ from "jquery";
+
 let toastTimeout = 2000;
 let currentToastId = 0;
 export function infoToast(firstLine, secondLine?) {

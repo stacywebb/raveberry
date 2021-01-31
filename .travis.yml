@@ -10,14 +10,15 @@ services:
   - docker
 
 install:
-  yarn install --production
+  - yarn install --production
   # for some reason tsc does not find all type declaration files in another folder,
   # even with path remapping. Thus we use it from the default folder.
   - yarn install --modules-folder node_modules
-  - node_modules/typescript/bin/tsc
+  - yarn tsc
   - docker build -f docker/tests.Dockerfile -t raveberry-test .
 
 script:
+  - yarn jest
   - docker-compose -f tests/docker-compose.yml up --exit-code-from daphne
 
 before_deploy:
