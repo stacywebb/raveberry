@@ -1,2 +1,5 @@
 /admin
 /bundle.js
+/*.css
+/*.css.map
+/fonts

@@ -1,6 +1,4 @@
 {% load static %}
-{% load sass_tags %}
-{% load compress %}
 
 <!doctype html>
 <html lang="en">
@@ -9,13 +7,9 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-		<link id="active-stylesheet" rel="stylesheet" href="{% sass_src "scss/dark.scss" %}"/>
-		<link id="inactive-stylesheet" rel="stylesheet-disabled" href="{% sass_src "scss/light.scss" %}"/>
+		<link id="active-stylesheet" rel="stylesheet" href="{% static "dark.css" %}"/>
+		<link id="inactive-stylesheet" rel="stylesheet-disabled" href="{% static "light.css" %}"/>
 
-
-		<!-- Optional JavaScript for Bootstrap -->
-		<!-- jQuery first, then Popper.js (not used), then Bootstrap JS -->
-		{% compress js inline %}
 		<script>
 			CSRF_TOKEN = "{{ csrf_token }}";
 			urls = {
@@ -49,7 +43,6 @@
 			{% block js %}
 			{% endblock %}
 		</script>
-		{% endcompress %}
 		<script src="{% static "bundle.js" %}"></script>
 
 		<title>Raveberry</title>
