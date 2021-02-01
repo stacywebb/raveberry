@@ -1,4 +1,7 @@
 import {registerSpecificState, updateBaseState, infoToast, successToast, errorToast} from "./base.js";
+import $ from "jquery";
+import Cookies from 'js-cookie'
+import 'jquery-ui-dist/jquery-ui';
 
 registerSpecificState(function (newState) {
 	updateBaseState(newState);
@@ -78,14 +81,14 @@ registerSpecificState(function (newState) {
 		}
 	}
 
-	if (window.Cookies.get("ignore_updates") === undefined) {
+	if (Cookies.get("ignore_updates") === undefined) {
 		$('#update_information_policy option[value=yes]').attr('selected','selected');
 	} else {
 		$('#update_information_policy option[value=no]').attr('selected','selected');
 	}
 });
 
-$(document).ready(function() {
+$(document).ready(function(){
 	$('#voting_system').change(function() {
 		$.post(urls['set_voting_system'], {
 			value: $(this).is(":checked"),
@@ -534,9 +537,9 @@ $(document).ready(function() {
 	});
 	$('#update_information_policy').on('change', function() {
 		if ((<HTMLInputElement>this).value == 'yes') {
-		    window.Cookies.remove('ignore_updates');
+		    Cookies.remove('ignore_updates');
 		} else {
-			window.Cookies.set('ignore_updates', '', {expires: 365});
+			Cookies.set('ignore_updates', '', {expires: 365});
 		}
 	});
 	$('#open_changelog').on('click tap', function() {

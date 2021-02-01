@@ -1,4 +1,7 @@
-import * as $ from "jquery";
+import $ from "jquery";
+import 'bootstrap';
+import 'jquerykeyframes';
+import Cookies from 'js-cookie'
 
 let toastTimeout = 2000;
 let currentToastId = 0;
@@ -107,8 +110,8 @@ export function updateBaseState(newState) {
 		$('#navbar_icon').css('visibility', 'visible');
 	}
 
-	if (window.Cookies.get('platform') === undefined) {
-		window.Cookies.set('platform', newState.default_platform, { expires: 1 });
+	if (Cookies.get('platform') === undefined) {
+		Cookies.set('platform', newState.default_platform, { expires: 1 });
 	}
 
 	updatePlatformClasses();
@@ -183,16 +186,16 @@ function updatePlatformClasses() {
 	$('#youtube').addClass('icon_disabled');
 	$('#spotify').addClass('icon_disabled');
 	$('#soundcloud').addClass('icon_disabled');
-	if (window.Cookies.get('platform') == 'local') {
+	if (Cookies.get('platform') == 'local') {
 		$('#local').removeClass('icon_disabled');
 		$('#local').addClass('icon_enabled');
-	} else if (window.Cookies.get('platform') == 'youtube') {
+	} else if (Cookies.get('platform') == 'youtube') {
 		$('#youtube').removeClass('icon_disabled');
 		$('#youtube').addClass('icon_enabled');
-	} else if (window.Cookies.get('platform') == 'spotify') {
+	} else if (Cookies.get('platform') == 'spotify') {
 		$('#spotify').removeClass('icon_disabled');
 		$('#spotify').addClass('icon_enabled');
-	} else if (window.Cookies.get('platform') == 'soundcloud') {
+	} else if (Cookies.get('platform') == 'soundcloud') {
 		$('#soundcloud').removeClass('icon_disabled');
 		$('#soundcloud').addClass('icon_enabled');
 	}
@@ -276,6 +279,10 @@ function decideHashtagScrolling() {
 }
 
 $(document).ready(function() {
+    /*throw 42;
+	console.log('hi');
+	console.log($('#goto_update').html());*/
+
 	// add the csrf token to every post request
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR){
 		if (options.type.toLowerCase() === "post") {
@@ -285,7 +292,6 @@ $(document).ready(function() {
 			options.data += options.data?"&":"";
 			// add _token entry
 			options.data += "csrfmiddlewaretoken=" + encodeURIComponent(CSRF_TOKEN);
-			console.log(CSRF_TOKEN);
 		}
 	});
 
@@ -375,14 +381,14 @@ $(document).ready(function() {
 	if ($('#active-stylesheet').attr('href').endsWith('dark.css')) {
 		$('#light_theme').addClass('icon_disabled');
 		$('#dark_theme').addClass('icon_enabled');
-		if (window.Cookies.get('theme') == 'light') {
+		if (Cookies.get('theme') == 'light') {
 			toggle_theme();
 		}
 	} else {
 		$('#light_theme').addClass('icon_enabled');
 		$('#dark_theme').addClass('icon_disabled');
 		$('#navbar_icon').attr('src', urls['normal_light_icon']);
-		if (window.Cookies.get('theme') == 'dark') {
+		if (Cookies.get('theme') == 'dark') {
 			toggle_theme();
 		}
 	}
@@ -391,37 +397,37 @@ $(document).ready(function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
 		toggle_theme();
-		window.Cookies.set('theme', 'light', { expires: 7 });
+		Cookies.set('theme', 'light', { expires: 7 });
 	});
 	$('#dark_theme').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
 		toggle_theme();
-		window.Cookies.set('theme', 'dark', { expires: 7 });
+		Cookies.set('theme', 'dark', { expires: 7 });
 	});
 
 	$('#local').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		window.Cookies.set('platform', 'local', { expires: 1 });
+		Cookies.set('platform', 'local', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#youtube').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		window.Cookies.set('platform', 'youtube', { expires: 1 });
+		Cookies.set('platform', 'youtube', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#spotify').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		window.Cookies.set('platform', 'spotify', { expires: 1 });
+		Cookies.set('platform', 'spotify', { expires: 1 });
 		updatePlatformClasses();
 	});
 	$('#soundcloud').on('click tap', function() {
 		if ($(this).hasClass('icon_enabled'))
 			return
-		window.Cookies.set('platform', 'soundcloud', { expires: 1 });
+		Cookies.set('platform', 'soundcloud', { expires: 1 });
 		updatePlatformClasses();
 	});
 
@@ -436,15 +442,15 @@ $(document).ready(function() {
 	})
 	$('#remind_updates').on('click tap', function() {
 		let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		window.Cookies.set('ignore_updates', '', {expires: tomorrow});
+		Cookies.set('ignore_updates', '', {expires: tomorrow});
 		$('#update-banner').slideUp('fast');
 	})
 	$('#ignore_updates').on('click tap', function() {
-		window.Cookies.set('ignore_updates', '', {expires: 365});
+		Cookies.set('ignore_updates', '', {expires: 365});
 		$('#update-banner').slideUp('fast');
 	})
 	if (ADMIN) {
-		if (window.Cookies.get("ignore_updates") === undefined) {
+		if (Cookies.get("ignore_updates") === undefined) {
 			$.get(urls['upgrade_available']).done(function(response) {
 				if (response) {
 					$('#update-banner').slideDown('fast');

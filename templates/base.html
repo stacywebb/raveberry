@@ -15,15 +15,6 @@
 
 		<!-- Optional JavaScript for Bootstrap -->
 		<!-- jQuery first, then Popper.js (not used), then Bootstrap JS -->
-		{% compress js file %}
-		<script src="{% static "libs/jquery/dist/jquery.min.js" %}"></script>
-		<script src="{% static "libs/bootstrap/dist/js/bootstrap.min.js" %}"></script>
-		<script src="{% static "libs/jquery-ui-dist/jquery-ui.min.js" %}"></script>
-		<script src="{% static "libs/jquery-ui-touch-punch/jquery.ui.touch-punch.min.js" %}"></script>
-		<script src="{% static "libs/jquerykeyframes/dist/jquery.keyframes.js" %}"></script>
-		<script src="{% static "libs/js-cookie/src/js.cookie.js" %}"></script>
-		<script src="{% static "libs/markdown-it/dist/markdown-it.min.js" %}"></script>
-		{% endcompress %}
 		{% compress js inline %}
 		<script>
 			CSRF_TOKEN = "{{ csrf_token }}";
@@ -55,14 +46,11 @@
 			{% else %}
 			let CONTROLS_ENABLED = false;
 			{% endif %}
+			{% block js %}
+			{% endblock %}
 		</script>
 		{% endcompress %}
-		{% compress js file %}
-		<script type="module" src="{% static "js/base.js" %}"></script>
-		{% block scripts %}
-		{% endblock %}
-		<script type="module" src="{% static "js/events.js" %}"></script>
-		{% endcompress %}
+		<script src="{% static "bundle.js" %}"></script>
 
 		<title>Raveberry</title>
 		<link id="favicon" rel="shortcut icon" type="image/png" href=""/>

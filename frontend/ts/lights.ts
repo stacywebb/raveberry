@@ -1,4 +1,5 @@
 import {registerSpecificState, updateBaseState, successToast, errorToast} from "./base.js";
+import $ from 'jquery';
 
 registerSpecificState(function (newState) {
 	updateBaseState(newState);
@@ -53,7 +54,7 @@ registerSpecificState(function (newState) {
 	$('#fixed_color').val(newState.fixed_color);
 });
 
-$(document).ready(function() {
+$(document).ready(function(){
 	$('#ring_program').change(function() {
 		let selected = $("#ring_program option:selected").val();
 		$.post(urls['set_ring_program'], {

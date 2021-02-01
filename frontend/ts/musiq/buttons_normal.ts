@@ -1,8 +1,9 @@
 import {state} from "./update.js";
 import {keyOfElement, showPlayButton, showPauseButton, playlistEnabled, disablePlaylistMode} from "./buttons.js";
 import {infoToast, successToast, warningToast, errorToast} from "../base.js";
+import $ from "jquery";
 
-$(document).ready(function() {
+$(document).ready(function(){
 	$('#restart_song').on('click tap', function (e) {
 		$.post(urls['restart']);
 	});

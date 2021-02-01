@@ -1,4 +1,6 @@
-$(document).ready(function() {
+import $ from "jquery";
+
+$(document).ready(function(){
     let password_plaintext = $("#password").text();
     if (password_plaintext != "Unknown") {
         let password_hidden = password_plaintext.replace(/./g, "•")

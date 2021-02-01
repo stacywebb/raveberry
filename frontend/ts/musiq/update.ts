@@ -1,5 +1,7 @@
 import {registerSpecificState, updateBaseState} from "../base.js";
 import {showPlayButton, showPauseButton} from "./buttons.js";
+import $ from "jquery";
+import Cookies from 'js-cookie'
 
 export let state = null;
 let animationInProgress = false;
@@ -45,7 +47,7 @@ registerSpecificState(function (newState) {
 			$('#current_song_title').trigger('change');
 		}
 
-		let previous_vote = window.Cookies.get('vote_' + currentSong.queue_key);
+		let previous_vote = Cookies.get('vote_' + currentSong.queue_key);
 		if (previous_vote == '+') {
 			$('#song_votes .vote_up').addClass('pressed');
 			$('#song_votes .vote_down').removeClass('pressed');
@@ -203,7 +205,7 @@ function createQueueItem(song) {
 		.addClass('queue_info_controls')
 		.appendTo(info);
 	if (VOTING_SYSTEM) {
-		let previous_vote = window.Cookies.get('vote_' + song.id);
+		let previous_vote = Cookies.get('vote_' + song.id);
 		let up = $('<i/>')
 			.addClass('fas')
 			.addClass('fa-chevron-circle-up')

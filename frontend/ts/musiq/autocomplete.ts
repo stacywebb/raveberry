@@ -1,6 +1,9 @@
 import {request_new_music, request_archived_music, playlistEnabled} from "./buttons.js";
+import $ from "jquery";
+import Cookies from 'js-cookie'
+import 'jquery-ui-dist/jquery-ui';
 
-$(document).ready(function() {
+$(document).ready(function(){
 	$(function() {
 		$(".autocomplete").autocomplete({
 			source: function(request, response) {
@@ -68,7 +71,7 @@ $(document).ready(function() {
 						.append('<i class="fas fa-search suggestion_type"></i>')
 						.append(term)
 						.append(additional_keywords);
-					if (window.Cookies.get('platform') == 'spotify' || window.Cookies.get('platform') == 'soundcloud') {
+					if (Cookies.get('platform') == 'spotify' || Cookies.get('platform') == 'soundcloud') {
 						suggestion_div.append(forbidden_keywords);
 					}
 					return $('<li class="ui-menu-item-with-icon"></li>')

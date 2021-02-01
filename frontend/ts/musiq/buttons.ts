@@ -1,5 +1,8 @@
 import {state} from "./update.js";
 import {infoToast, successToast, warningToast, errorToast} from "../base.js";
+import $ from "jquery";
+import Cookies from 'js-cookie'
+
 
 export function keyOfElement(element) {
 	// takes a jquery element and returns the index of it in the song queue
@@ -37,7 +40,7 @@ export function showPauseButton() {
 		$('#play_button_container').addClass('morphed');
 	}, 50);
 }
-export function request_archived_music(key, query, platform=window.Cookies.get('platform')) {
+export function request_archived_music(key, query, platform=Cookies.get('platform')) {
 	$.post(urls['request_music'],
 		{
 			key: key,
@@ -46,7 +49,7 @@ export function request_archived_music(key, query, platform=window.Cookies.get('
 			platform: platform,
 		}).done(function(response) {
 			successToast(response.message, '"' + query + '"');
-			window.Cookies.set('vote_' + response.key, '+', { expires: 7 });
+			Cookies.set('vote_' + response.key, '+', { expires: 7 });
 		}).fail(function(response) {
 			errorToast(response.responseText, '"' + query + '"');
 		});
@@ -55,7 +58,7 @@ export function request_archived_music(key, query, platform=window.Cookies.get('
 	disablePlaylistMode();
 }
 
-export function request_new_music(query, platform=window.Cookies.get('platform')) {
+export function request_new_music(query, platform=Cookies.get('platform')) {
 	$.post(urls['request_music'],
 		{
 			query: query,
@@ -63,7 +66,7 @@ export function request_new_music(query, platform=window.Cookies.get('platform')
 			platform: platform,
 		}).done(function(response) {
 			successToast(response.message, '"' + query + '"');
-			window.Cookies.set('vote_' + response.key, '+', { expires: 7 });
+			Cookies.set('vote_' + response.key, '+', { expires: 7 });
 		}).fail(function(response) {
 			errorToast(response.responseText, '"' + query + '"');
 		});
@@ -84,7 +87,7 @@ function showTitleModal(element, url) {
 	$('#title_modal').modal('show');
 }
 
-$(document).ready(function() {
+$(document).ready(function(){
 	$('#playlist_mode').on('click tap', function (e) {
 		if ($(this).hasClass('icon_disabled')) {
 			$(this).removeClass('icon_disabled');
