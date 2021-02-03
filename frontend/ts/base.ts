@@ -1,7 +1,11 @@
-import $ from "jquery";
+// https://github.com/rollup/rollup/issues/1267#issuecomment-296395734
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
+const jQuery = $;
+
 import 'bootstrap';
 import 'jquerykeyframes';
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 
 let toastTimeout = 2000;
 let currentToastId = 0;
@@ -278,11 +282,7 @@ function decideHashtagScrolling() {
 	decideScrolling($('#hashtag_text'), 0.030, 2);
 }
 
-$(document).ready(function() {
-    /*throw 42;
-	console.log('hi');
-	console.log($('#goto_update').html());*/
-
+export function onReady() {
 	// add the csrf token to every post request
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR){
 		if (options.type.toLowerCase() === "post") {
@@ -458,4 +458,6 @@ $(document).ready(function() {
 			})
 		}
 	}
-});
+}
+
+$(document).ready(onReady);

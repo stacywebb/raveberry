@@ -10,6 +10,9 @@
 		"dom",
 		"es7"
 	],
+	"paths": {
+		"@src/*": ["frontend/ts/*"]
+	}
   },
   "include": ["./frontend/ts/**/*"]
 }
