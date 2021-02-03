@@ -4,7 +4,7 @@ import commonjs from '@rollup/plugin-commonjs';
 import inject from '@rollup/plugin-inject';
 
 export default {
-	input: 'frontend/js/**/*.js',
+	input: './js/**/*.js',
 	external: [
 		'CSRF_TOKEN',
 		'urls',
@@ -15,7 +15,7 @@ export default {
 		'FORBIDDEN_KEYWORDS'
 	],
 	output: {
-		file: 'static/bundle.js',
+		file: './bundle.js',
 		format: 'iife',
 	},
 	plugins: [multi(), nodeResolve(), commonjs(), inject({

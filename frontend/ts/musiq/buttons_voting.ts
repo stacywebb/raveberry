@@ -2,7 +2,7 @@ import {keyOfElement} from "./buttons.js";
 import {state} from "./update.js";
 import {warningToastWithBar} from "../base.js";
 import $ from "jquery";
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 
 
 $(document).ready(function(){

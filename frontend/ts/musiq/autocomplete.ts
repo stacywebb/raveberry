@@ -1,6 +1,6 @@
 import {request_new_music, request_archived_music, playlistEnabled} from "./buttons.js";
 import $ from "jquery";
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 import 'jquery-ui-dist/jquery-ui';
 
 $(document).ready(function(){

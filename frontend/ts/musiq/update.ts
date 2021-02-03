@@ -1,7 +1,7 @@
 import {registerSpecificState, updateBaseState} from "../base.js";
 import {showPlayButton, showPauseButton} from "./buttons.js";
 import $ from "jquery";
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 
 export let state = null;
 let animationInProgress = false;

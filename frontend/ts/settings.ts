@@ -1,6 +1,6 @@
 import {registerSpecificState, updateBaseState, infoToast, successToast, errorToast} from "./base.js";
 import $ from "jquery";
-import Cookies from 'js-cookie'
+import * as Cookies from 'js-cookie'
 import 'jquery-ui-dist/jquery-ui';
 
 registerSpecificState(function (newState) {
