@@ -3,7 +3,10 @@ import $ from "jquery";
 import * as Cookies from 'js-cookie'
 import 'jquery-ui-dist/jquery-ui';
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
 	$(function() {
 		$(".autocomplete").autocomplete({
 			source: function(request, response) {
@@ -122,4 +125,6 @@ $(document).ready(function(){
 		ul.outerWidth($('#current_song_card').outerWidth());
 		ul.css('left', $('#current_song_card').position()['left']);
 	}
-});
+}
+
+$(document).ready(onReady);

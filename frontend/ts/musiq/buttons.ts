@@ -87,7 +87,10 @@ function showTitleModal(element, url) {
 	$('#title_modal').modal('show');
 }
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
 	$('#playlist_mode').on('click tap', function (e) {
 		if ($(this).hasClass('icon_disabled')) {
 			$(this).removeClass('icon_disabled');
@@ -198,4 +201,6 @@ $(document).ready(function(){
 	$('#title_modal .modal-content').on('click tap', function() {
 		$('#title_modal').modal('hide');
 	});
-});
+}
+
+$(document).ready(onReady);

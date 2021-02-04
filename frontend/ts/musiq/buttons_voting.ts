@@ -5,7 +5,10 @@ import $ from "jquery";
 import * as Cookies from 'js-cookie'
 
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
 	// Use a token bucket implementation to allow 10 Votes per minute.
     let maxTokens = 10;
     let currentTokens = maxTokens;
@@ -108,4 +111,6 @@ $(document).ready(function(){
 			vote_down($(this), key);
 		}
 	});
-});
+}
+
+$(document).ready(onReady);

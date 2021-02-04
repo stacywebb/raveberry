@@ -3,7 +3,10 @@ import {keyOfElement, showPlayButton, showPauseButton, playlistEnabled, disableP
 import {infoToast, successToast, warningToast, errorToast} from "../base.js";
 import $ from "jquery";
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
 	$('#restart_song').on('click tap', function (e) {
 		$.post(urls['restart']);
 	});
@@ -69,4 +72,6 @@ $(document).ready(function(){
 		});
 	});
 
-});
+}
+
+$(document).ready(onReady);

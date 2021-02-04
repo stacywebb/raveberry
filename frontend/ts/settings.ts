@@ -88,7 +88,10 @@ registerSpecificState(function (newState) {
 	}
 });
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('settings/')) {
+		return;
+	}
 	$('#voting_system').change(function() {
 		$.post(urls['set_voting_system'], {
 			value: $(this).is(":checked"),
@@ -592,4 +595,6 @@ $(document).ready(function(){
 			$('#changelog_modal').modal('show');
 		}, scrollDuration);
 	}
-});
+}
+
+$(document).ready(onReady);

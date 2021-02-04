@@ -2,7 +2,10 @@ import {state} from "./update.js";
 import {keyOfElement} from "./buttons.js";
 import $ from "jquery";
 
-$(document).ready(function(){
+export function onReady() {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
 	// enable drag and drop for the song queue
 	$("#current_song").disableSelection();
 	$("#song_queue").disableSelection();
@@ -36,4 +39,6 @@ $(document).ready(function(){
 			});
 		},
 	});
-});
+}
+
+$(document).ready(onReady);
