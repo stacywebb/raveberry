@@ -4,7 +4,7 @@ import * as fs from 'fs';
 beforeEach(() => {
 	let head = fs.readFileSync('head.html', 'utf8');
 	let body = fs.readFileSync('body.html', 'utf8');
-	let css = fs.readFileSync('dist/dark.css', 'utf8');
+	let css = fs.readFileSync('../static/dark.css', 'utf8');
 	document.head.innerHTML = head;
 	document.body.innerHTML = body;
 	let style = document.createElement("style");
