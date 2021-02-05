@@ -1,5 +1,10 @@
 import {onReady, infoToast} from '@src/base';
 import * as fs from 'fs';
+import {render_template} from './util';
+
+beforeAll(() => {
+	render_template('musiq.html');
+});
 
 beforeEach(() => {
 	let head = fs.readFileSync('head.html', 'utf8');
