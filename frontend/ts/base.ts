@@ -282,6 +282,33 @@ function decideHashtagScrolling() {
 	decideScrolling($('#hashtag_text'), 0.030, 2);
 }
 
+export function handleUpdateBanner() {
+	$('#goto_update').on('click tap', function() {
+		location.href = '/settings/#show_changelog';
+		if (location.pathname.endsWith('/settings/')) {
+			location.reload();
+		}
+	})
+	$('#remind_updates').on('click tap', function() {
+		let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
+		Cookies.set('ignore_updates', '', {expires: tomorrow});
+		$('#update-banner').slideUp('fast');
+	})
+	$('#ignore_updates').on('click tap', function() {
+		Cookies.set('ignore_updates', '', {expires: 365});
+		$('#update-banner').slideUp('fast');
+	})
+	if (ADMIN) {
+		if (Cookies.get("ignore_updates") === undefined) {
+			$.get(urls['upgrade_available']).done(function(response) {
+				if (response) {
+					$('#update-banner').slideDown('fast');
+				}
+			})
+		}
+	}
+}
+
 export function onReady() {
 	// add the csrf token to every post request
 	$.ajaxPrefilter(function(options, originalOptions, jqXHR){
@@ -434,30 +461,7 @@ export function onReady() {
 	// request initial state update
 	getState();
 
-	$('#goto_update').on('click tap', function() {
-		location.href = '/settings/#show_changelog';
-		if (location.pathname.endsWith('/settings/')) {
-			location.reload();
-		}
-	})
-	$('#remind_updates').on('click tap', function() {
-		let tomorrow = new Date(new Date().getTime() + 24 * 60 * 60 * 1000);
-		Cookies.set('ignore_updates', '', {expires: tomorrow});
-		$('#update-banner').slideUp('fast');
-	})
-	$('#ignore_updates').on('click tap', function() {
-		Cookies.set('ignore_updates', '', {expires: 365});
-		$('#update-banner').slideUp('fast');
-	})
-	if (ADMIN) {
-		if (Cookies.get("ignore_updates") === undefined) {
-			$.get(urls['upgrade_available']).done(function(response) {
-				if (response) {
-					$('#update-banner').slideDown('fast');
-				}
-			})
-		}
-	}
+	handleUpdateBanner();
 }
 
 $(document).ready(onReady);

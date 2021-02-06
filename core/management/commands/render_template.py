@@ -17,7 +17,10 @@ class Command(BaseCommand):
             template = get_template(options["template"])
         except TemplateDoesNotExist:
             raise CommandError('Template "%s" does not exist' % options["template"])
-        html = template.render({})
+
+        context = {"local_enabled": True, "youtube_enabled": True}
+        html = template.render(context)
+
         soup = BeautifulSoup(html, "html.parser")
         with open(options["head_file"], "w") as f:
             f.write(soup.head.prettify())
