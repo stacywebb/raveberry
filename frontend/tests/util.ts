@@ -3,8 +3,13 @@ import * as fs from 'fs';
 import * as Cookies from 'js-cookie';
 
 export function render_template(template, options?) {
-	let x = child.spawnSync('python3', ['-m', 'pip', 'freeze']);
+	let x = child.spawnSync('python3', ['-m', 'django', 'version']);
 	console.log(x.stdout.toString());
+	console.log(x.stderr.toString());
+
+	x = child.spawnSync('python3', ['../manage.py', 'version']);
+	console.log(x.stdout.toString());
+	console.log(x.stderr.toString());
 
 	options = JSON.stringify(options) || '';
 	let p = child.spawnSync('python3', ['../manage.py', 'render_template', template, 'head.html', 'body.html', options], {
