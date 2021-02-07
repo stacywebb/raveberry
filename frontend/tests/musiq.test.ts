@@ -4,7 +4,7 @@ import * as update from '@src/musiq/update';
 import * as util from './util';
 
 beforeAll(() => {
-	util.render_template('musiq.html', {"local_enabled": true, "youtube_enabled": true});
+	util.render_template('musiq.html');
 });
 
 beforeEach(() => {

@@ -41,7 +41,7 @@
 	  "fonts": "cp node_modules/@fortawesome/fontawesome-free/webfonts/*.woff2 ../static/",
 	  "watch-js": "rm -f ../static/bundle.js && touch bundle.js && ln bundle.js ../static/bundle.js && tsc --watch & rollup -c --watch",
 	  "watch-css": "sass --watch scss/dark.scss ../static/dark.css",
-	  "test": "jest",
+	  "test": "jest --runInBand",
 	  "build": "yarn js && yarn css && yarn fonts"
   }
 }

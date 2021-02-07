@@ -3,7 +3,7 @@ import * as util from './util';
 import * as Cookies from 'js-cookie';
 
 beforeAll(() => {
-	util.render_template('base.html');
+	util.render_template('base.html', {"local_enabled": true, "youtube_enabled": true});
 });
 
 beforeEach(() => {
