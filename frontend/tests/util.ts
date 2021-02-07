@@ -4,7 +4,7 @@ import * as Cookies from 'js-cookie';
 
 export function render_template(template, options?) {
 	options = JSON.stringify(options) || '';
-	let p = child.spawnSync('../manage.py', ['render_template', template, 'head.html', 'body.html', options], {
+	let p = child.spawnSync('python3', ['../manage.py', 'render_template', template, 'head.html', 'body.html', options], {
 		env: {"DJANGO_MOCK": "1"}
 	});
 	if (p.error) {
