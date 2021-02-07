@@ -10,23 +10,17 @@ services:
   - docker
 
 install:
-  - yarn install --production
-  # for some reason tsc does not find all type declaration files in another folder,
-  # even with path remapping. Thus we use it from the default folder.
-  - yarn install --modules-folder node_modules
-  - yarn tsc
+  - yarn --cwd frontend install
+
+before_script:
+  - yarn --cwd frontend build
   - docker build -f docker/tests.Dockerfile -t raveberry-test .
 
 script:
-  - yarn jest
+  - yarn --cwd frontend test
   - docker-compose -f tests/docker-compose.yml up --exit-code-from daphne
 
 before_deploy:
-  # after testing, node_modules is not needed anymore
-  - rm -rf node_modules
-  - scripts/clean_libs.sh
-  - pip install -r requirements/dev.txt
-  - DJANGO_MOCK=1 python manage.py compilescss
   - mkdir raveberry
   # move all files except those needed for packaging
   - mv `\ls -A1 | grep -v -E '(setup.py|MANIFEST.in|raveberry)'` raveberry
@@ -52,10 +46,6 @@ after_deploy:
   - echo $PYPI_VERSION
   # stop the build here if they are equal to skip unnecessary builds
   - if [ "$DOCKER_VERSION" == "$PYPI_VERSION" ]; then exit 0; fi
-  # include static javascript files in docker container
-  # We need to use --force as COMPRESS_OFFLINE is not enabled.
-  # Online compression is still needed for inline javascript.
-  - DJANGO_MOCK=1 python manage.py compress --force
   # copy static admin files into the folder
   - DJANGO_PATH=$(python -c 'import django, os; print(f"{os.path.dirname(django.__file__)}/contrib/admin/static/admin")')
   - cp -r "$DJANGO_PATH" static/admin

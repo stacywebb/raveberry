@@ -52,8 +52,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "watson",
-    "compressor",
-    "sass_processor",
     "channels",
 ]
 
@@ -181,20 +179,6 @@ if not os.path.exists(os.path.join(BASE_DIR, "static/admin")) and not MOCK:
             target_is_directory=True,
         )
         print("linked static admin files")
-
-
-# adapted for django-compressor and sass-processor
-SASS_PROCESSOR_ROOT = STATIC_ROOT
-# Change this to True if you are changing scss files.
-SASS_PROCESSOR_ENABLED = False
-
-STATICFILES_FINDERS = (
-    "django.contrib.staticfiles.finders.FileSystemFinder",
-    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    # other finders..
-    "compressor.finders.CompressorFinder",
-    "sass_processor.finders.CssFinder",
-)
 
 # channels
 ASGI_APPLICATION = "main.routing.APPLICATION"
