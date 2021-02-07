@@ -17,7 +17,8 @@ install:
   # https://cryptography.io/en/latest/installation.html
   - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev rustc cargo
   - pip3 install -r requirements/common.txt
-  - python3 -m django version
+  - python -c "import sys; print(sys.executable)"
+  - python3 -c "import sys; print(sys.executable)"
   - yarn --cwd frontend install
 
 before_script:
