@@ -1,12 +1,17 @@
-import {registerSpecificState, updateBaseState} from "../base.js";
-import {showPlayButton, showPauseButton} from "./buttons.js";
-import $ from "jquery";
+import {registerSpecificState, updateBaseState} from "../base";
+import {showPlayButton, showPauseButton} from "./buttons";
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
 import * as Cookies from 'js-cookie'
 
 export let state = null;
 let animationInProgress = false;
 
-registerSpecificState(function (newState) {
+export function clearState() {
+	state = null;
+}
+
+export function updateState(newState) {
 	updateBaseState(newState);
 
 	if (!('current_song' in newState)) {
@@ -150,7 +155,8 @@ registerSpecificState(function (newState) {
 	// don't start a new animation when an old one is still in progress
 	// the running animation will end in the (then) current state
 	applyQueueChange(oldState, state);
-});
+}
+registerSpecificState(updateState);
 
 function insertDisplayName(element, song) {
 	if (song.artist == null || song.artist == '') {

@@ -1,14 +1,12 @@
-import {keyOfElement} from "./buttons.js";
-import {state} from "./update.js";
-import {warningToastWithBar} from "../base.js";
-import $ from "jquery";
+import {keyOfElement} from "./buttons";
+import {state} from "./update";
+import {warningToastWithBar} from "../base";
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
 import * as Cookies from 'js-cookie'
 
 
 export function onReady() {
-	if (!window.location.pathname.endsWith('musiq/')) {
-		return;
-	}
 	// Use a token bucket implementation to allow 10 Votes per minute.
     let maxTokens = 10;
     let currentTokens = maxTokens;
@@ -113,4 +111,9 @@ export function onReady() {
 	});
 }
 
-$(document).ready(onReady);
+$(document).ready(() => {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
+	onReady();
+});

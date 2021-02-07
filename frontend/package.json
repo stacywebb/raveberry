@@ -36,7 +36,7 @@
     "uglify-js": "^3.12.6"
   },
   "scripts": {
-	  "js": "tsc && rollup -c && uglifyjs bundle.js --compress --mangle -o ../static/bundle.js",
+	  "js": "rm -f ../static/bundle.js && tsc && rollup -c && uglifyjs bundle.js --compress --mangle -o ../static/bundle.js",
 	  "css": "sass scss/light.scss ../static/light.css && sass scss/dark.scss ../static/dark.css",
 	  "fonts": "cp node_modules/@fortawesome/fontawesome-free/webfonts/*.woff2 ../static/",
 	  "watch-js": "rm -f ../static/bundle.js && touch bundle.js && ln bundle.js ../static/bundle.js && tsc --watch & rollup -c --watch",

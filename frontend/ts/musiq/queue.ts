@@ -1,11 +1,9 @@
-import {state} from "./update.js";
-import {keyOfElement} from "./buttons.js";
-import $ from "jquery";
+import {state} from "./update";
+import {keyOfElement} from "./buttons";
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
 
 export function onReady() {
-	if (!window.location.pathname.endsWith('musiq/')) {
-		return;
-	}
 	// enable drag and drop for the song queue
 	$("#current_song").disableSelection();
 	$("#song_queue").disableSelection();
@@ -41,4 +39,9 @@ export function onReady() {
 	});
 }
 
-$(document).ready(onReady);
+$(document).ready(() => {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
+	onReady();
+});

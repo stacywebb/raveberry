@@ -1,7 +1,8 @@
-import {state} from "./update.js";
-import {infoToast, successToast, warningToast, errorToast} from "../base.js";
-import $ from "jquery";
-import Cookies from 'js-cookie'
+import {state} from "./update";
+import {infoToast, successToast, warningToast, errorToast} from "../base";
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
+import * as Cookies from 'js-cookie'
 
 
 export function keyOfElement(element) {
@@ -88,9 +89,6 @@ function showTitleModal(element, url) {
 }
 
 export function onReady() {
-	if (!window.location.pathname.endsWith('musiq/')) {
-		return;
-	}
 	$('#playlist_mode').on('click tap', function (e) {
 		if ($(this).hasClass('icon_disabled')) {
 			$(this).removeClass('icon_disabled');
@@ -107,7 +105,7 @@ export function onReady() {
 	// the key of the song that was suggested via random suggest
 	let randomKey = null;
 	$('#random_suggestion').on('click tap', function() {
-		$.get(urls['random_suggestion'], { playlist: playlistEnabled() }, function(response) {
+		$.get(urls['random_suggestion'], { playlist: playlistEnabled() }).done(function(response) {
 			$('#music_input').val(response.suggestion).trigger('change');
 			randomKey = response.key;
 			// change the search icon into the go icon to indicate the absence of search
@@ -203,4 +201,9 @@ export function onReady() {
 	});
 }
 
-$(document).ready(onReady);
+$(document).ready(() => {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
+	onReady();
+});

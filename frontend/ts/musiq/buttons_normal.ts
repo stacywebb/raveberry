@@ -1,12 +1,10 @@
-import {state} from "./update.js";
-import {keyOfElement, showPlayButton, showPauseButton, playlistEnabled, disablePlaylistMode} from "./buttons.js";
-import {infoToast, successToast, warningToast, errorToast} from "../base.js";
-import $ from "jquery";
+import {state} from "./update";
+import {keyOfElement, showPlayButton, showPauseButton, playlistEnabled, disablePlaylistMode} from "./buttons";
+import {infoToast, successToast, warningToast, errorToast} from "../base";
+import * as jqueryProxy from 'jquery'
+const $: JQueryStatic = (<any>jqueryProxy).default || jqueryProxy
 
 export function onReady() {
-	if (!window.location.pathname.endsWith('musiq/')) {
-		return;
-	}
 	$('#restart_song').on('click tap', function (e) {
 		$.post(urls['restart']);
 	});
@@ -74,4 +72,9 @@ export function onReady() {
 
 }
 
-$(document).ready(onReady);
+$(document).ready(() => {
+	if (!window.location.pathname.endsWith('musiq/')) {
+		return;
+	}
+	onReady();
+});

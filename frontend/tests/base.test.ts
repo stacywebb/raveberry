@@ -1,32 +1,17 @@
 import * as base from '@src/base';
-import * as fs from 'fs';
-import {render_template} from './util';
+import * as util from './util';
 import * as Cookies from 'js-cookie';
 
 beforeAll(() => {
-	render_template('base.html');
+	util.render_template('base.html');
 });
 
 beforeEach(() => {
-	let head = fs.readFileSync('head.html', 'utf8');
-	let body = fs.readFileSync('body.html', 'utf8');
-	let css = fs.readFileSync('../static/dark.css', 'utf8');
-	document.head.innerHTML = head;
-	document.body.innerHTML = body;
-	// execute script that is included in head html
-	eval($('script')[0].innerHTML);
-	// prevent onReady functions from firing on their own
-	(<any>$).isReady = true;
-	let style = document.createElement("style");
-	style.type = 'text/css';
-	style.innerHTML = css;
-	document.head.appendChild(style);
+	util.prepareDocument();
 });
 
 afterEach(() => {
-	for (let cookie in Cookies.get()) {
-		Cookies.remove(cookie);
-	}
+	util.clearCookies();
 });
 
 test.each([
