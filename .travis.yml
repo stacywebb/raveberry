@@ -13,6 +13,7 @@ before_install:
   - nvm install --lts
 
 install:
+  - pip install -r requirements/common.txt
   - yarn --cwd frontend install
 
 before_script:
