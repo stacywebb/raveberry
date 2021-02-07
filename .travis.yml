@@ -15,8 +15,7 @@ before_install:
 install:
   # sometimes, no wheel for cryptography is available -> manual building required
   # https://cryptography.io/en/latest/installation.html
-  - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev
-  - curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sudo sh
+  - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev rustc cargo
   - pip install -r requirements/common.txt
   - yarn --cwd frontend install
 
