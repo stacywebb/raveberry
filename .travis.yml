@@ -13,6 +13,9 @@ before_install:
   - nvm install --lts
 
 install:
+  # sometimes, no wheel for cryptography is available -> manual building required
+  # https://cryptography.io/en/latest/installation.html
+  - sudo apt-get install build-essential libssl-dev libffi-dev python3-dev rustc
   - pip install -r requirements/common.txt
   - yarn --cwd frontend install
 
