@@ -3,9 +3,7 @@ import * as fs from 'fs';
 import * as Cookies from 'js-cookie';
 
 export function render_template(template, options?) {
-	let x = child.spawnSync('python', ['-c', 'import sys; print(sys.executable)']);
-	console.log(x.stdout.toString());
-	x = child.spawnSync('python3', ['-c', 'import sys; print(sys.executable)']);
+	x = child.spawnSync('python3', ['-m', 'pip', 'freeze']);
 	console.log(x.stdout.toString());
 
 	options = JSON.stringify(options) || '';
