@@ -7,6 +7,12 @@ export function render_template(template, options?) {
 	let p = child.spawnSync('../manage.py', ['render_template', template, 'head.html', 'body.html', options], {
 		env: {"DJANGO_MOCK": "1"}
 	});
+	if (p.error) {
+		throw p.error;
+	}
+	if (p.status != 0) {
+		console.error(p.stderr.toString('utf8'));
+	}
 }
 
 export function prepareDocument() {
