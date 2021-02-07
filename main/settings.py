@@ -156,10 +156,8 @@ LOGOUT_REDIRECT_URL = "/"
 # SESSION_COOKIE_AGE = 3600
 
 # Static files (CSS, JavaScript, Images)
-STATIC_ROOT = os.path.join(BASE_DIR, "static")
-STATICFILES_DIRS: List[str] = [
-    # os.path.join(BASE_DIR, "staticfiles/"),
-]
+STATIC_FILES = os.path.join(BASE_DIR, "static")
+STATICFILES_DIRS: List[str] = [STATIC_FILES]
 STATIC_URL = "/static/"
 
 if not os.path.exists(os.path.join(BASE_DIR, "static/admin")) and not MOCK:
